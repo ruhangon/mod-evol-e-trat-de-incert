@@ -1,6 +1,9 @@
+import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
+
+import genetico.Individuo;
+import item.Item;
 
 public class Main {
 	public static void main(String[] args) {
@@ -32,13 +35,7 @@ public class Main {
 		 * identificação do item
 		 */
 		Item item = new Item();
-		List<Item> itens = item.cadastraItens(scan, qtdItens);
-
-		// for (Item it : itens) {
-		// System.out.println("Nome do item: " + it.getNome());
-		// System.out.println("Peso: " + it.getPeso());
-		// System.out.println("Valor: " + it.getValor());
-		// }
+		ArrayList<Item> itens = item.cadastraItens(scan, qtdItens);
 
 		System.out.println();
 
@@ -59,7 +56,12 @@ public class Main {
 			}
 		} while (capMochila <= 0);
 
-		// aqui
+		// cria os indivíduos
+		Individuo ind = new Individuo(qtdItens);
+		ArrayList<Individuo> individuos = ind.criaIndividuos(qtdItens, itens);
+		ind.mostraIndividuos(individuos, qtdItens);
+
+		System.out.println("\n\nFim do programa");
 
 	}
 }

@@ -3,28 +3,52 @@ package genetico;
 import java.util.ArrayList;
 import java.util.Random;
 
+import item.Item;
+
 public class Individuo {
 	private ArrayList<Integer> cromossomo;
 	private Integer peso;
 	private Double valor;
 
 	public Individuo(int qtdItens) {
-		cromossomo = new ArrayList<>(qtdItens);
+		this.cromossomo = new ArrayList<>(qtdItens);
+		this.peso = 0;
+		this.valor = 0.0;
 	}
 
-	public ArrayList<Integer> criaIndividuos(int qtdItens, ArrayList<Item> itens) {
+	public ArrayList<Individuo> criaIndividuos(int qtdItens, ArrayList<Item> itens) {
 		int qtdIndividuos = qtdItens * 5;
-		ArrayList<Integer> individuos = new ArrayList<>(qtdIndividuos);
-		int contInd;
+		ArrayList<Individuo> individuos = new ArrayList<>(qtdIndividuos);
+		int contInd = 0;
 		do {
+			Individuo novoInd = new Individuo(qtdItens);
 			for (int contItens = 0; contItens < qtdItens; contItens++) {
 				Random random = new Random();
-				numAleat = random.nextInt(1); // pega um número aleatório entre 0 e 1
-				Individuo novoInd = new Individuo(qtdItens);
-
+				int numAleat = random.nextInt(2); // pega um número aleatório entre 0 e 1
+				// System.out.println(numAleat);
+				novoInd.cromossomo.add(numAleat);
+				if (numAleat == 1) {
+					novoInd.peso += itens.get(contItens).getPeso();
+					novoInd.valor += itens.get(contItens).getValor();
+				}
 			}
+			individuos.add(novoInd);
 			contInd++;
 		} while (contInd < qtdIndividuos);
+		return individuos;
+	}
+
+	public void mostraIndividuos(ArrayList<Individuo> individuos, int qtdItens) {
+		int contInd = 0;
+		do {
+			for (int contCrom = 0; contCrom < qtdItens; contCrom++) {
+				System.out.print(individuos.get(contInd).cromossomo.get(contCrom));
+			}
+			System.out.println();
+			System.out.println("Peso: " + individuos.get(contInd).peso);
+			System.out.println("Valor: " + individuos.get(contInd).valor);
+			contInd++;
+		} while (contInd < individuos.size());
 	}
 
 	public ArrayList<Integer> getCromossomo() {
