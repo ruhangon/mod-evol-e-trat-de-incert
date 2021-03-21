@@ -3,6 +3,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import genetico.Individuo;
+import genetico.Populacao;
 import item.Item;
 
 public class Main {
@@ -56,10 +57,33 @@ public class Main {
 			}
 		} while (capMochila <= 0);
 
+		System.out.println();
+
 		// cria os indivíduos
 		Individuo ind = new Individuo(qtdItens);
 		ArrayList<Individuo> individuos = ind.criaIndividuos(qtdItens, itens);
-		ind.mostraIndividuos(individuos, qtdItens);
+		// ind.mostraIndividuos(individuos, qtdItens);
+
+		// pergunta a usuário tamanho da população
+		int tamPop;
+		do {
+			try {
+				System.out.println("Qual o tamanho da população?");
+				System.out.print("Resposta: ");
+				tamPop = scan.nextInt();
+				scan.nextLine();
+				if (tamPop <= 1)
+					System.out.println("Opção inválida");
+			} catch (InputMismatchException e) {
+				System.out.println("Opção inválida");
+				tamPop = 0;
+				scan.nextLine();
+			}
+		} while (tamPop <= 1);
+
+		System.out.println();
+
+		Populacao populacao = new Populacao(tamPop);
 
 		System.out.println("\n\nFim do programa");
 

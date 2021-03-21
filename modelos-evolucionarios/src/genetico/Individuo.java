@@ -51,6 +51,14 @@ public class Individuo {
 		} while (contInd < individuos.size());
 	}
 
+	public boolean individuoJaExiste(Individuo ind1, Individuo ind2) {
+		for (int i = 0; i < ind1.cromossomo.size(); i++) {
+			if (ind1.cromossomo.get(i) != ind2.cromossomo.get(i))
+				return false;
+		}
+		return true;
+	}
+
 	public ArrayList<Integer> getCromossomo() {
 		return cromossomo;
 	}
