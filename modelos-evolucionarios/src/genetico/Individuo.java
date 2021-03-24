@@ -27,10 +27,6 @@ public class Individuo {
 				int numAleat = random.nextInt(2); // pega um número aleatório entre 0 e 1
 				// System.out.println(numAleat);
 				novoInd.cromossomo.add(numAleat);
-				if (numAleat == 1) {
-					novoInd.peso += itens.get(contItens).getPeso();
-					novoInd.valor += itens.get(contItens).getValor();
-				}
 			}
 			individuos.add(novoInd);
 			contInd++;
@@ -38,25 +34,12 @@ public class Individuo {
 		return individuos;
 	}
 
-	public void mostraIndividuos(ArrayList<Individuo> individuos, int qtdItens) {
-		int contInd = 0;
-		do {
-			for (int contCrom = 0; contCrom < qtdItens; contCrom++) {
-				System.out.print(individuos.get(contInd).cromossomo.get(contCrom));
-			}
-			System.out.println();
-			System.out.println("Peso: " + individuos.get(contInd).peso);
-			System.out.println("Valor: " + individuos.get(contInd).valor);
-			contInd++;
-		} while (contInd < individuos.size());
-	}
-
-	public boolean individuoJaExiste(Individuo ind1, Individuo ind2) {
-		for (int i = 0; i < ind1.cromossomo.size(); i++) {
-			if (ind1.cromossomo.get(i) != ind2.cromossomo.get(i))
-				return false;
+	public static boolean existeNaPopulacao(Individuo individuoAComparar, ArrayList<Individuo> todosOsIndividuos) {
+		for (Individuo atual : todosOsIndividuos) {
+			if (atual.cromossomo.equals(individuoAComparar.cromossomo))
+				return true;
 		}
-		return true;
+		return false;
 	}
 
 	public ArrayList<Integer> getCromossomo() {
