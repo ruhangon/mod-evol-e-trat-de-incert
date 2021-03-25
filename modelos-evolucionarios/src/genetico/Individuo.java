@@ -3,8 +3,6 @@ package genetico;
 import java.util.ArrayList;
 import java.util.Random;
 
-import item.Item;
-
 public class Individuo {
 	private ArrayList<Integer> cromossomo;
 	private Integer peso;
@@ -16,7 +14,7 @@ public class Individuo {
 		this.valor = 0.0;
 	}
 
-	public ArrayList<Individuo> criaIndividuos(int qtdItens, ArrayList<Item> itens) {
+	public ArrayList<Individuo> criaIndividuos(int qtdItens) {
 		int qtdIndividuos = qtdItens * 5;
 		ArrayList<Individuo> individuos = new ArrayList<>(qtdIndividuos);
 		int contInd = 0;

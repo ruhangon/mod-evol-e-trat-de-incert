@@ -13,32 +13,32 @@ public class Main {
 		System.out.println();
 
 		// perguntar para usuário quantos itens tem disponível
-		// int qtdItens;
-		// do {
-		// try {
-		// System.out.println("Quantos itens há disponível?");
-		// System.out.print("Resposta: ");
-		// qtdItens = scan.nextInt();
-		// scan.nextLine();
-		// if (qtdItens <= 0)
-		// System.out.println("Opção inválida");
-		// } catch (InputMismatchException e) {
-		// System.out.println("Opção inválida");
-		// qtdItens = 0;
-		// scan.nextLine();
-		// }
-		// } while (qtdItens <= 0);
+		int qtdItens;
+		do {
+			try {
+				System.out.println("Quantos itens há disponível?");
+				System.out.print("Resposta: ");
+				qtdItens = scan.nextInt();
+				scan.nextLine();
+				if (qtdItens <= 0)
+					System.out.println("Opção inválida");
+			} catch (InputMismatchException e) {
+				System.out.println("Opção inválida");
+				qtdItens = 0;
+				scan.nextLine();
+			}
+		} while (qtdItens <= 0);
 
-		// System.out.println();
+		System.out.println();
 
 		/*
 		 * cadastro de itens. Pergunta nome, valor e peso. O nome serve para facilitar a
 		 * identificação do item
 		 */
-		// Item item = new Item();
-		// ArrayList<Item> itens = item.cadastraItens(scan, qtdItens);
+		Item item = new Item();
+		ArrayList<Item> itens = item.cadastraItens(scan, qtdItens);
 
-		// System.out.println();
+		System.out.println();
 
 		// pede para o usuário qual será capacidade da mochila
 		int capMochila;
@@ -59,20 +59,20 @@ public class Main {
 
 		System.out.println();
 
-		int qtdItens = 4;
-		Item item1 = new Item("taco", 1, 10.0);
-		Item item2 = new Item("bola", 2, 20.0);
-		Item item3 = new Item("raquete", 3, 30.0);
-		Item item4 = new Item("robô", 4, 40.0);
-		ArrayList<Item> itens = new ArrayList<>(4);
-		itens.add(item1);
-		itens.add(item2);
-		itens.add(item3);
-		itens.add(item4);
+		// int qtdItens = 4;
+		// Item item1 = new Item("taco", 1, 10.0);
+		// Item item2 = new Item("bola", 2, 20.0);
+		// Item item3 = new Item("raquete", 3, 30.0);
+		// Item item4 = new Item("robô", 4, 40.0);
+		// ArrayList<Item> itens = new ArrayList<>(4);
+		// itens.add(item1);
+		// itens.add(item2);
+		// itens.add(item3);
+		// itens.add(item4);
 
 		// cria os indivíduos
 		Individuo ind = new Individuo(qtdItens);
-		ArrayList<Individuo> individuos = ind.criaIndividuos(qtdItens, itens);
+		ArrayList<Individuo> individuos = ind.criaIndividuos(qtdItens);
 
 		// pergunta a usuário tamanho da população
 		int tamPop;
