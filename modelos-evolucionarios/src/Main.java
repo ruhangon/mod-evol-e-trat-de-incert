@@ -41,24 +41,23 @@ public class Main {
 		// System.out.println();
 
 		// pede para o usuário qual será capacidade da mochila
-		// int capMochila;
-		// do {
-		// try {
-		// System.out.println("Qual a capacidade da mochila, o peso máximo que ela
-		// suporta?");
-		// System.out.print("Resposta: ");
-		// capMochila = scan.nextInt();
-		// scan.nextLine();
-		// if (capMochila <= 0)
-		// System.out.println("Opção inválida");
-		// } catch (InputMismatchException e) {
-		// System.out.println("Opção inválida");
-		// capMochila = 0;
-		// scan.nextLine();
-		// }
-		// } while (capMochila <= 0);
+		int capMochila;
+		do {
+			try {
+				System.out.println("Qual a capacidade da mochila, o peso máximo que ela suporta?");
+				System.out.print("Resposta: ");
+				capMochila = scan.nextInt();
+				scan.nextLine();
+				if (capMochila <= 0)
+					System.out.println("Opção inválida");
+			} catch (InputMismatchException e) {
+				System.out.println("Opção inválida");
+				capMochila = 0;
+				scan.nextLine();
+			}
+		} while (capMochila <= 0);
 
-		// System.out.println();
+		System.out.println();
 
 		int qtdItens = 4;
 		Item item1 = new Item("taco", 1, 10.0);
@@ -98,6 +97,11 @@ public class Main {
 
 		// cria a população com os indivíduos
 		populacao.criaPopulacao(individuos, tamPop);
+
+		// calcula fitness dos indivíduos da população
+		populacao.calculaFitness(itens, capMochila, 100);
+
+		// mostra os indivíduos da população após calculo do fitness
 		populacao.mostraIndividuosDaPopulacao();
 
 		System.out.println("\n\nFim do programa");
