@@ -60,6 +60,33 @@ public class Populacao {
 		} while (contInd < this.individuos.size());
 	}
 
+	public void roleta() {
+		Integer valorMinimo = buscaValorMinimoERemove();
+		// agora tendo o valor mínimo subtrai ele de todos os indivíduos da população atual
+		for (int contInd = 0; contInd < this.individuos.size(); contInd++) {
+			this.individuos.get(contInd).setValor(this.individuos.get(contInd).getValor() - valorMinimo);
+		}
+		// soma os valores novos e guarda em uma variável
+		Integer somaValores=0;
+		for (int contInd = 0; contInd < this.individuos.size(); contInd++) {
+			somaValores += this.individuos.get(contInd).getValor();
+		}
+		// aqui
+	}
+
+	public Integer buscaValorMinimoERemove() {
+		Integer valorMinimo = 1000000; // guarda o menor valor encontrado em um indivíduo da população
+		int posIndComValorMinimo = 0; // guarda a posição do indivíduo com menor valor
+		for (int contInd = 0; contInd < this.individuos.size(); contInd++) {
+			if (this.individuos.get(contInd).getValor() < valorMinimo) {
+				valorMinimo = this.individuos.get(contInd).getValor();
+				posIndComValorMinimo = contInd;
+			}
+		}
+		this.individuos.remove(posIndComValorMinimo); // remove o indivíduo com o menor valor encontrado
+		return valorMinimo;
+	}
+
 	public ArrayList<Individuo> getIndividuos() {
 		return individuos;
 	}

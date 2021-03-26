@@ -60,10 +60,10 @@ public class Main {
 		System.out.println();
 
 		// int qtdItens = 4;
-		// Item item1 = new Item("taco", 1, 10.0);
-		// Item item2 = new Item("bola", 2, 20.0);
-		// Item item3 = new Item("raquete", 3, 30.0);
-		// Item item4 = new Item("robô", 4, 40.0);
+		// Item item1 = new Item("taco", 1, 10);
+		// Item item2 = new Item("bola", 2, 20);
+		// Item item3 = new Item("raquete", 3, 30);
+		// Item item4 = new Item("robô", 4, 40);
 		// ArrayList<Item> itens = new ArrayList<>(4);
 		// itens.add(item1);
 		// itens.add(item2);
@@ -103,6 +103,9 @@ public class Main {
 
 		// mostra os indivíduos da população após calculo do fitness
 		populacao.mostraIndividuosDaPopulacao();
+
+		// roda a roleta para selecionar indivíduos
+		populacao.roleta();
 
 		System.out.println("\n\nFim do programa");
 

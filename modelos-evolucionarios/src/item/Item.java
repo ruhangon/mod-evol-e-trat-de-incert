@@ -6,12 +6,12 @@ import java.util.Scanner;
 public class Item {
 	private String nome;
 	private Integer peso;
-	private Double valor;
+	private Integer valor;
 
 	public Item() {
 	}
 
-	public Item(String nome, Integer peso, Double valor) {
+	public Item(String nome, Integer peso, Integer valor) {
 		this.nome = nome;
 		this.peso = peso;
 		this.valor = valor;
@@ -32,7 +32,7 @@ public class Item {
 			scan.nextLine();
 			System.out.println("Digite o valor do item?");
 			System.out.print("Resposta: ");
-			valor = scan.nextDouble();
+			valor = scan.nextInt();
 			scan.nextLine();
 			itens.add(new Item(nome, peso, valor));
 			cont++;
@@ -48,7 +48,7 @@ public class Item {
 		return peso;
 	}
 
-	public Double getValor() {
+	public Integer getValor() {
 		return valor;
 	}
 

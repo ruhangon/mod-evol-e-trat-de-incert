@@ -6,12 +6,12 @@ import java.util.Random;
 public class Individuo {
 	private ArrayList<Integer> cromossomo;
 	private Integer peso;
-	private Double valor;
+	private Integer valor;
 
 	public Individuo(int qtdItens) {
 		this.cromossomo = new ArrayList<>(qtdItens);
 		this.peso = 0;
-		this.valor = 0.0;
+		this.valor = 0;
 	}
 
 	public ArrayList<Individuo> criaIndividuos(int qtdItens) {
@@ -56,11 +56,11 @@ public class Individuo {
 		this.peso = peso;
 	}
 
-	public Double getValor() {
+	public Integer getValor() {
 		return valor;
 	}
 
-	public void setValor(Double valor) {
+	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
 
