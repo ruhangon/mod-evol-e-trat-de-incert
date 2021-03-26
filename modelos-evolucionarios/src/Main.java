@@ -104,8 +104,12 @@ public class Main {
 		// mostra os indivíduos da população após calculo do fitness
 		populacao.mostraIndividuosDaPopulacao();
 
+		System.out.println();
+
 		// roda a roleta para selecionar indivíduos
 		populacao.roleta();
+
+		populacao.mostraIndividuosDaPopulacao();
 
 		System.out.println("\n\nFim do programa");
 

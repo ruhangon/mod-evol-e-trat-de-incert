@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import item.Item;
+import util.LimitesDoIndividuo;
 
 public class Populacao {
 	private ArrayList<Individuo> individuos;
@@ -48,6 +49,9 @@ public class Populacao {
 		}
 	}
 
+	/*
+	 * mostra cromossomo e valor de cada indivíduo da população
+	 */
 	public void mostraIndividuosDaPopulacao() {
 		int contInd = 0;
 		do {
@@ -60,22 +64,48 @@ public class Populacao {
 		} while (contInd < this.individuos.size());
 	}
 
+	/*
+	 * método que usa roleta para encontrar os pais que serão usados para gerar os
+	 * novos filhos
+	 */
 	public void roleta() {
-		Integer valorMinimo = buscaValorMinimoERemove();
-		// agora tendo o valor mínimo subtrai ele de todos os indivíduos da população atual
+		int valorMinimo = buscaValorMinimoERemove();
+		/*
+		 * agora tendo o valor mínimo subtrai ele de todos os indivíduos da população
+		 * atual
+		 */
 		for (int contInd = 0; contInd < this.individuos.size(); contInd++) {
 			this.individuos.get(contInd).setValor(this.individuos.get(contInd).getValor() - valorMinimo);
 		}
 		// soma os valores novos e guarda em uma variável
-		Integer somaValores=0;
+		int somaValores = 0;
 		for (int contInd = 0; contInd < this.individuos.size(); contInd++) {
 			somaValores += this.individuos.get(contInd).getValor();
 		}
-		// aqui
+		// cria limites de cada indivíduo para serem inseridos na roleta
+		LimitesDoIndividuo l = new LimitesDoIndividuo();
+		ArrayList<LimitesDoIndividuo> limites = l.preencheLimites(this.individuos);
+		// cria ArrayList para colocar os novos pais escolhidos pela roleta
+		ArrayList<Individuo> novosIndividuos = new ArrayList<>();
+		Random random = new Random();
+		int numAleat = random.nextInt(somaValores); // escolhe o índice de um dos indivíduos da roleta
+		Individuo i = l.encontraIndividuo(limites, numAleat);
+		novosIndividuos.add(i);
+		do {
+			numAleat = random.nextInt(somaValores); // escolhe o índice de um dos indivíduos da roleta
+			i = l.encontraIndividuo(limites, numAleat);
+			if (!Individuo.existeNaPopulacao(i, novosIndividuos))
+				novosIndividuos.add(i);
+		} while (novosIndividuos.size() < (this.individuos.size() / 2));
+		this.individuos = novosIndividuos;
+		System.out.println("A roleta selecionou " + this.individuos.size() + " pais para a população");
 	}
 
-	public Integer buscaValorMinimoERemove() {
-		Integer valorMinimo = 1000000; // guarda o menor valor encontrado em um indivíduo da população
+	/*
+	 * busca indivíduo com menor valor, remove ele e retorna o seu valor
+	 */
+	public int buscaValorMinimoERemove() {
+		int valorMinimo = 1000000; // guarda o menor valor encontrado em um indivíduo da população
 		int posIndComValorMinimo = 0; // guarda a posição do indivíduo com menor valor
 		for (int contInd = 0; contInd < this.individuos.size(); contInd++) {
 			if (this.individuos.get(contInd).getValor() < valorMinimo) {
@@ -83,7 +113,7 @@ public class Populacao {
 				posIndComValorMinimo = contInd;
 			}
 		}
-		this.individuos.remove(posIndComValorMinimo); // remove o indivíduo com o menor valor encontrado
+		this.individuos.remove(posIndComValorMinimo);
 		return valorMinimo;
 	}
 
