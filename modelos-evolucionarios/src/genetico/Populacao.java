@@ -91,11 +91,14 @@ public class Populacao {
 		int numAleat = random.nextInt(somaValores); // escolhe o índice de um dos indivíduos da roleta
 		Individuo i = l.encontraIndividuo(limites, numAleat);
 		novosIndividuos.add(i);
+		System.out.println("O indivíduo referente a posição " + numAleat + " da roleta foi adicionado");
 		do {
 			numAleat = random.nextInt(somaValores); // escolhe o índice de um dos indivíduos da roleta
 			i = l.encontraIndividuo(limites, numAleat);
-			if (!Individuo.existeNaPopulacao(i, novosIndividuos))
+			if (!Individuo.existeNaPopulacao(i, novosIndividuos)) {
 				novosIndividuos.add(i);
+				System.out.println("O indivíduo referente a posição " + numAleat + " da roleta foi adicionado");
+			}
 		} while (novosIndividuos.size() < (this.individuos.size() / 2));
 		this.individuos = novosIndividuos;
 		System.out.println("A roleta selecionou " + this.individuos.size() + " pais para a população");

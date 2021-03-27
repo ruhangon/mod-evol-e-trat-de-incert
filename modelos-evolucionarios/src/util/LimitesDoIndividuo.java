@@ -37,6 +37,7 @@ public class LimitesDoIndividuo {
 			limitesDosIndividuos
 					.add(new LimitesDoIndividuo(individuosDaPopulacao.get(contInd), limiteInicialInd, limiteFinalInd));
 		}
+		mostraLimitesDosIndividuos(limitesDosIndividuos);
 		return limitesDosIndividuos;
 	}
 
@@ -44,7 +45,7 @@ public class LimitesDoIndividuo {
 	 * com base no numAleat retorna o indivíduo referente a ele
 	 */
 	public Individuo encontraIndividuo(ArrayList<LimitesDoIndividuo> limitesInd, int numAleat) {
-		Individuo i=null;
+		Individuo i = null;
 		for (int contLim = 0; contLim < limitesInd.size(); contLim++) {
 			if ((numAleat >= limitesInd.get(contLim).inicio) && (numAleat <= limitesInd.get(contLim).fim)) {
 				i = limitesInd.get(contLim).individuo;
@@ -52,6 +53,18 @@ public class LimitesDoIndividuo {
 			}
 		}
 		return i;
+	}
+
+	public void mostraLimitesDosIndividuos(ArrayList<LimitesDoIndividuo> limitesInd) {
+		for (int contLim = 0; contLim < limitesInd.size(); contLim++) {
+			for (int contCrom = 0; contCrom < limitesInd.get(0).individuo.getCromossomo().size(); contCrom++) {
+				System.out.print(limitesInd.get(contLim).individuo.getCromossomo().get(contCrom));
+			}
+			System.out.println();
+			System.out.println("Limite inicial desse indivíduo: " + limitesInd.get(contLim).inicio);
+			System.out.println("Limite final desse indivíduo: " + limitesInd.get(contLim).fim);
+		}
+		System.out.println();
 	}
 
 	public Individuo getIndividuo() {
