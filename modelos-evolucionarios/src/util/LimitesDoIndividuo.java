@@ -37,7 +37,7 @@ public class LimitesDoIndividuo {
 			limitesDosIndividuos
 					.add(new LimitesDoIndividuo(individuosDaPopulacao.get(contInd), limiteInicialInd, limiteFinalInd));
 		}
-		mostraLimitesDosIndividuos(limitesDosIndividuos);
+		// mostraLimitesDosIndividuos(limitesDosIndividuos);
 		return limitesDosIndividuos;
 	}
 

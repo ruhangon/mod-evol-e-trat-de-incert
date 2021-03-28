@@ -28,6 +28,12 @@ public class Populacao {
 	}
 
 	public void calculaFitness(ArrayList<Item> itens, int capMaxima, int penalidade) {
+		// caso peso e valor dos indivíduos estejam diferentes de 0, faz ficarem com 0
+		for (int contInd = 0; contInd < this.individuos.size(); contInd++) {
+			this.individuos.get(contInd).setPeso(0);
+			this.individuos.get(contInd).setValor(0);
+		}
+		// soma peso e valor de cada indivíduo da população
 		for (int contInd = 0; contInd < this.individuos.size(); contInd++) {
 			for (int contCrom = 0; contCrom < this.individuos.get(0).getCromossomo().size(); contCrom++) {
 				if (this.individuos.get(contInd).getCromossomo().get(contCrom) == 1) {
@@ -53,6 +59,7 @@ public class Populacao {
 	 * mostra cromossomo e valor de cada indivíduo da população
 	 */
 	public void mostraIndividuosDaPopulacao() {
+		System.out.println("Esses são os indivíduos da população");
 		int contInd = 0;
 		do {
 			for (int contCrom = 0; contCrom < this.individuos.get(0).getCromossomo().size(); contCrom++) {
@@ -68,7 +75,8 @@ public class Populacao {
 	 * método que usa roleta para encontrar os pais que serão usados para gerar os
 	 * novos filhos
 	 */
-	public void roleta() {
+	public ArrayList<Individuo> roleta() {
+		System.out.println("Usa a roleta");
 		int valorMinimo = buscaValorMinimoERemove();
 		/*
 		 * agora tendo o valor mínimo subtrai ele de todos os indivíduos da população
@@ -86,22 +94,22 @@ public class Populacao {
 		LimitesDoIndividuo l = new LimitesDoIndividuo();
 		ArrayList<LimitesDoIndividuo> limites = l.preencheLimites(this.individuos);
 		// cria ArrayList para colocar os novos pais escolhidos pela roleta
-		ArrayList<Individuo> novosIndividuos = new ArrayList<>();
+		ArrayList<Individuo> pais = new ArrayList<>();
 		Random random = new Random();
 		int numAleat = random.nextInt(somaValores); // escolhe o índice de um dos indivíduos da roleta
 		Individuo i = l.encontraIndividuo(limites, numAleat);
-		novosIndividuos.add(i);
+		pais.add(i);
 		System.out.println("O indivíduo referente a posição " + numAleat + " da roleta foi adicionado");
 		do {
 			numAleat = random.nextInt(somaValores); // escolhe o índice de um dos indivíduos da roleta
 			i = l.encontraIndividuo(limites, numAleat);
-			if (!Individuo.existeNaPopulacao(i, novosIndividuos)) {
-				novosIndividuos.add(i);
+			if (!Individuo.existeNaPopulacao(i, pais)) {
+				pais.add(i);
 				System.out.println("O indivíduo referente a posição " + numAleat + " da roleta foi adicionado");
 			}
-		} while (novosIndividuos.size() < (this.individuos.size() / 2));
-		this.individuos = novosIndividuos;
-		System.out.println("A roleta selecionou " + this.individuos.size() + " pais para a população");
+		} while (pais.size() < (this.individuos.size() / 2));
+		System.out.println("A roleta selecionou " + pais.size() + " pais para a população");
+		return pais;
 	}
 
 	/*

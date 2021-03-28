@@ -40,6 +40,16 @@ public class Individuo {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		String strCromossomo = "";
+		for (int contCrom = 0; contCrom < this.cromossomo.size(); contCrom++) {
+			String atual = Integer.toString(this.cromossomo.get(contCrom));
+			strCromossomo = strCromossomo.concat(atual);
+		}
+		return strCromossomo;
+	}
+
 	public ArrayList<Integer> getCromossomo() {
 		return cromossomo;
 	}

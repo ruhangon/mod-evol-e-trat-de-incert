@@ -3,6 +3,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import genetico.Individuo;
+import genetico.Pais;
 import genetico.Populacao;
 import item.Item;
 
@@ -99,16 +100,33 @@ public class Main {
 		populacao.criaPopulacao(individuos, tamPop);
 
 		// calcula fitness dos indivíduos da população
-		populacao.calculaFitness(itens, capMochila, 100);
+		populacao.calculaFitness(itens, capMochila, 150);
 
 		// mostra os indivíduos da população após calculo do fitness
 		populacao.mostraIndividuosDaPopulacao();
 
 		System.out.println();
 
-		// roda a roleta para selecionar indivíduos
-		populacao.roleta();
+		// roda a roleta para selecionar os pais
+		ArrayList<Individuo> pais = populacao.roleta();
 
+		System.out.println();
+
+		int qtdMutacoes = 0;
+		if (tamPop < 100) {
+			qtdMutacoes = 1;
+		} else {
+			qtdMutacoes = (int) (tamPop * 0.02);
+		}
+
+		int totalDePaisEFilhos = tamPop - qtdMutacoes;
+
+		// faz reprodução e retorna arraylist para passar para população
+		ArrayList<Individuo> novosIndividuos = Pais.reproduz(pais, totalDePaisEFilhos);
+
+		populacao.setIndividuos(novosIndividuos);
+
+		System.out.println("Após fazer crossover");
 		populacao.mostraIndividuosDaPopulacao();
 
 		System.out.println("\n\nFim do programa");
