@@ -14,6 +14,16 @@ public class Individuo {
 		this.valor = 0;
 	}
 
+	public Individuo(Individuo obj) {
+		ArrayList<Integer> copiaCromossomo = new ArrayList<>(obj.cromossomo.size());
+		for (Integer vlCr : obj.cromossomo) {
+			copiaCromossomo.add(vlCr);
+		}
+		this.cromossomo = copiaCromossomo;
+		this.peso = obj.peso;
+		this.valor = obj.valor;
+	}
+
 	public ArrayList<Individuo> criaIndividuos(int qtdItens) {
 		int qtdIndividuos = qtdItens * 5;
 		ArrayList<Individuo> individuos = new ArrayList<>(qtdIndividuos);

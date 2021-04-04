@@ -126,7 +126,20 @@ public class Main {
 
 		populacao.setIndividuos(novosIndividuos);
 
-		System.out.println("Após fazer crossover");
+		System.out.println();
+
+		// System.out.println("Indivíduos pós crossover: " +
+		// populacao.getIndividuos().size());
+
+		// insere as mutações para completar a população
+		populacao.insereMutacoes(qtdMutacoes);
+
+		System.out.println();
+
+		// System.out.println("Indivíduos pós mutação: " +
+		// populacao.getIndividuos().size());
+
+		System.out.println("Após fazer crossover e mutação");
 		populacao.mostraIndividuosDaPopulacao();
 
 		System.out.println("\n\nFim do programa");

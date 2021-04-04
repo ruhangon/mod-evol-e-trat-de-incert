@@ -30,7 +30,7 @@ public class Pais {
 				System.out.println(paisSelecionados.get(contPais) + " - " + paisSelecionados.get(contPais + 1));
 				System.out.println("Filho adicionado: " + filho1);
 			}
-			if (individuosComReproducao.size() == totalDePaisEFilhos)
+			if (individuosComReproducao.size() >= totalDePaisEFilhos)
 				break;
 			Individuo filho2 = Pais.geraFilho(paisSelecionados.get(contPais + 1), paisSelecionados.get(contPais),
 					posDivisao);
@@ -39,7 +39,7 @@ public class Pais {
 				System.out.println(paisSelecionados.get(contPais + 1) + " - " + paisSelecionados.get(contPais));
 				System.out.println("Filho adicionado: " + filho2);
 			}
-			if (individuosComReproducao.size() == totalDePaisEFilhos)
+			if (individuosComReproducao.size() >= totalDePaisEFilhos)
 				break;
 			contPais++;
 		} while (contPais < (paisSelecionados.size() - 1));
@@ -47,35 +47,35 @@ public class Pais {
 		 * para o caso de não ter preenchido toda a arraylist principal, encontra pais
 		 * aleatoriamente para gerar novos filhos para ela
 		 */
-		int indAleat1 = 0;
-		int indAleat2 = 0;
-		do {
-			indAleat1 = random.nextInt(paisSelecionados.size());
-			indAleat2 = random.nextInt(paisSelecionados.size());
-			if (indAleat1 == indAleat2) {
-				do {
+		if (individuosComReproducao.size() < totalDePaisEFilhos) {
+			int indAleat1 = 0;
+			int indAleat2 = 0;
+			do {
+				indAleat1 = random.nextInt(paisSelecionados.size());
+				indAleat2 = random.nextInt(paisSelecionados.size());
+				while (indAleat1 == indAleat2) {
 					indAleat2 = random.nextInt(paisSelecionados.size());
-				} while (indAleat1 == indAleat2);
-			}
-			Individuo filho1 = Pais.geraFilho(paisSelecionados.get(indAleat1), paisSelecionados.get(indAleat2),
-					posDivisao);
-			if (!Individuo.existeNaPopulacao(filho1, individuosComReproducao)) {
-				individuosComReproducao.add(filho1);
-				System.out.println(paisSelecionados.get(indAleat1) + " - " + paisSelecionados.get(indAleat2));
-				System.out.println("Filho adicionado: " + filho1);
-			}
-			if (individuosComReproducao.size() == totalDePaisEFilhos)
-				break;
-			Individuo filho2 = Pais.geraFilho(paisSelecionados.get(indAleat2), paisSelecionados.get(indAleat1),
-					posDivisao);
-			if (!Individuo.existeNaPopulacao(filho2, individuosComReproducao)) {
-				individuosComReproducao.add(filho2);
-				System.out.println(paisSelecionados.get(indAleat2) + " - " + paisSelecionados.get(indAleat1));
-				System.out.println("Filho adicionado: " + filho2);
-			}
-			if (individuosComReproducao.size() == totalDePaisEFilhos)
-				break;
-		} while (true);
+				}
+				Individuo filho1 = new Individuo(paisSelecionados.get(0).getCromossomo().size());
+				filho1 = Pais.geraFilho(paisSelecionados.get(indAleat1), paisSelecionados.get(indAleat2), posDivisao);
+				if (!Individuo.existeNaPopulacao(filho1, individuosComReproducao)) {
+					individuosComReproducao.add(filho1);
+					System.out.println(paisSelecionados.get(indAleat1) + " - " + paisSelecionados.get(indAleat2));
+					System.out.println("Filho adicionado: " + filho1);
+				}
+				if (individuosComReproducao.size() >= totalDePaisEFilhos)
+					break;
+				Individuo filho2 = new Individuo(paisSelecionados.get(0).getCromossomo().size());
+				filho2 = Pais.geraFilho(paisSelecionados.get(indAleat2), paisSelecionados.get(indAleat1), posDivisao);
+				if (!Individuo.existeNaPopulacao(filho2, individuosComReproducao)) {
+					individuosComReproducao.add(filho2);
+					System.out.println(paisSelecionados.get(indAleat2) + " - " + paisSelecionados.get(indAleat1));
+					System.out.println("Filho adicionado: " + filho2);
+				}
+				if (individuosComReproducao.size() >= totalDePaisEFilhos)
+					break;
+			} while (true);
+		}
 		return individuosComReproducao;
 	}
 

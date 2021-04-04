@@ -2,6 +2,7 @@ package genetico;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import item.Item;
 import util.LimitesDoIndividuo;
@@ -126,6 +127,37 @@ public class Populacao {
 		}
 		this.individuos.remove(posIndComValorMinimo);
 		return valorMinimo;
+	}
+
+	public void insereMutacoes(int qtdMut) {
+		System.out.println("Mutação");
+		Random random = new Random();
+		// escolhe uma posição aleatória de cromossomo para alterar
+		int cromAleat = random.nextInt(this.individuos.get(0).getCromossomo().size());
+		// escolhe um indivíduo aleatoriamente
+		int indAleat = random.nextInt(this.individuos.size());
+		Individuo novoIndividuo = null;
+		int contMut = 0;
+		do {
+			novoIndividuo = new Individuo(this.individuos.get(indAleat));
+			// System.out.println(novoIndividuo);
+			if (novoIndividuo.getCromossomo().get(cromAleat) == 1) {
+				novoIndividuo.getCromossomo().set(cromAleat, 0);
+			} else {
+				novoIndividuo.getCromossomo().set(cromAleat, 1);
+			}
+			// System.out.println(this.individuos.get(indAleat));
+			// System.out.println(novoIndividuo);
+			if (!Individuo.existeNaPopulacao(novoIndividuo, this.individuos)) {
+				this.individuos.add(novoIndividuo);
+				System.out.println("Indivíduo adicionado: " + novoIndividuo);
+				contMut++;
+				if (contMut >= qtdMut)
+					break;
+			}
+			cromAleat = random.nextInt(this.individuos.get(0).getCromossomo().size());
+			indAleat = random.nextInt(this.individuos.size());
+		} while (true);
 	}
 
 	public ArrayList<Individuo> getIndividuos() {
