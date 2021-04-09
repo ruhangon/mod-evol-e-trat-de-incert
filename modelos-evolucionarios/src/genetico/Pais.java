@@ -16,65 +16,29 @@ public class Pais {
 		do {
 			posDivisao = random.nextInt(individuosComReproducao.get(0).getCromossomo().size());
 		} while ((posDivisao <= 0) || (posDivisao >= (individuosComReproducao.get(0).getCromossomo().size() - 1)));
-		// reprodução para gerar novos filhos
-		int contPais = 0;
 		/*
-		 * primeiro passa sequencialmente gerando os filhos e adicionando eles a
-		 * arraylist de indivíduos principal
+		 * passa sequencialmente gerando os filhos e adicionando eles a arraylist de
+		 * indivíduos principal
 		 */
-		do {
+		for (int contPais = 0; contPais < (paisSelecionados.size()-1); contPais += 2) {
 			Individuo filho1 = Pais.geraFilho(paisSelecionados.get(contPais), paisSelecionados.get(contPais + 1),
 					posDivisao);
-			if (!Individuo.existeNaPopulacao(filho1, individuosComReproducao)) {
-				individuosComReproducao.add(filho1);
-				System.out.println(paisSelecionados.get(contPais) + " - " + paisSelecionados.get(contPais + 1));
-				System.out.println("Filho adicionado: " + filho1);
-			}
-			if (individuosComReproducao.size() >= totalDePaisEFilhos)
-				break;
+			individuosComReproducao.add(filho1);
+			System.out.println(paisSelecionados.get(contPais) + " - " + paisSelecionados.get(contPais + 1));
+			System.out.println("Filho adicionado: " + filho1);
 			Individuo filho2 = Pais.geraFilho(paisSelecionados.get(contPais + 1), paisSelecionados.get(contPais),
 					posDivisao);
-			if (!Individuo.existeNaPopulacao(filho2, individuosComReproducao)) {
-				individuosComReproducao.add(filho2);
-				System.out.println(paisSelecionados.get(contPais + 1) + " - " + paisSelecionados.get(contPais));
-				System.out.println("Filho adicionado: " + filho2);
-			}
-			if (individuosComReproducao.size() >= totalDePaisEFilhos)
-				break;
-			contPais++;
-		} while (contPais < (paisSelecionados.size() - 1));
-		/*
-		 * para o caso de não ter preenchido toda a arraylist principal, encontra pais
-		 * aleatoriamente para gerar novos filhos para ela
-		 */
+			individuosComReproducao.add(filho2);
+			System.out.println(paisSelecionados.get(contPais + 1) + " - " + paisSelecionados.get(contPais));
+			System.out.println("Filho adicionado: " + filho2);
+		}
+		// caso tenha faltado um indivíduo adiciona o abaixo
 		if (individuosComReproducao.size() < totalDePaisEFilhos) {
-			int indAleat1 = 0;
-			int indAleat2 = 0;
-			do {
-				indAleat1 = random.nextInt(paisSelecionados.size());
-				indAleat2 = random.nextInt(paisSelecionados.size());
-				while (indAleat1 == indAleat2) {
-					indAleat2 = random.nextInt(paisSelecionados.size());
-				}
-				Individuo filho1 = new Individuo(paisSelecionados.get(0).getCromossomo().size());
-				filho1 = Pais.geraFilho(paisSelecionados.get(indAleat1), paisSelecionados.get(indAleat2), posDivisao);
-				if (!Individuo.existeNaPopulacao(filho1, individuosComReproducao)) {
-					individuosComReproducao.add(filho1);
-					System.out.println(paisSelecionados.get(indAleat1) + " - " + paisSelecionados.get(indAleat2));
-					System.out.println("Filho adicionado: " + filho1);
-				}
-				if (individuosComReproducao.size() >= totalDePaisEFilhos)
-					break;
-				Individuo filho2 = new Individuo(paisSelecionados.get(0).getCromossomo().size());
-				filho2 = Pais.geraFilho(paisSelecionados.get(indAleat2), paisSelecionados.get(indAleat1), posDivisao);
-				if (!Individuo.existeNaPopulacao(filho2, individuosComReproducao)) {
-					individuosComReproducao.add(filho2);
-					System.out.println(paisSelecionados.get(indAleat2) + " - " + paisSelecionados.get(indAleat1));
-					System.out.println("Filho adicionado: " + filho2);
-				}
-				if (individuosComReproducao.size() >= totalDePaisEFilhos)
-					break;
-			} while (true);
+			Individuo filho = Pais.geraFilho(paisSelecionados.get(0), paisSelecionados.get(paisSelecionados.size() - 1),
+					posDivisao);
+			individuosComReproducao.add(filho);
+			System.out.println(paisSelecionados.get(0) + " - " + paisSelecionados.get(paisSelecionados.size() - 1));
+			System.out.println("Filho adicionado: " + filho);
 		}
 		return individuosComReproducao;
 	}

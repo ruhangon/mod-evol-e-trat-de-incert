@@ -128,18 +128,58 @@ public class Main {
 
 		System.out.println();
 
-		// System.out.println("Indivíduos pós crossover: " +
-		// populacao.getIndividuos().size());
-
 		// insere as mutações para completar a população
 		populacao.insereMutacoes(qtdMutacoes);
 
 		System.out.println();
 
-		// System.out.println("Indivíduos pós mutação: " +
-		// populacao.getIndividuos().size());
+		// System.out.println("Após fazer crossover e mutação");
+		// populacao.mostraIndividuosDaPopulacao();
 
-		System.out.println("Após fazer crossover e mutação");
+		/*
+		 * passa por novas populações, critério de parada é número de populações passado
+		 * pelo usuário
+		 */
+		int numPopulacoes = 0;
+		do {
+			try {
+				System.out.println("Quantas populações você terá até alcançar o resultado desejado?");
+				System.out.println("Observação = Uma população obrigatóriamente já passou por crossover e mutação");
+				System.out.print("Resposta: ");
+				numPopulacoes = scan.nextInt();
+				scan.nextLine();
+				if (numPopulacoes < 1)
+					System.out.println("Opção inválida");
+			} catch (InputMismatchException e) {
+				System.out.println("Opção inválida");
+				numPopulacoes = 0;
+				scan.nextLine();
+			}
+		} while (numPopulacoes < 1);
+
+		System.out.println();
+
+		int totalPopulacoes = numPopulacoes + 1;
+
+		for (int contPop = 1; contPop <= numPopulacoes; contPop++) {
+			populacao.calculaFitness(itens, capMochila, 150);
+			// limpa arraylist pais antes de descobrir os novos pais
+			pais.clear();
+			pais = populacao.roleta();
+			// limpa arraylist de novos indivíduos antes de descobrir os novos indivíduos
+			novosIndividuos.clear();
+			novosIndividuos = Pais.reproduz(pais, totalDePaisEFilhos);
+			populacao.setIndividuos(novosIndividuos);
+			populacao.insereMutacoes(qtdMutacoes);
+		}
+
+		System.out.println();
+
+		System.out.println("Total de populações do programa: " + totalPopulacoes);
+
+		System.out.println();
+
+		System.out.println("Abaixo estão os indivíduos selecionados na última população");
 		populacao.mostraIndividuosDaPopulacao();
 
 		System.out.println("\n\nFim do programa");
