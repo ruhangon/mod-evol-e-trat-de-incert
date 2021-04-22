@@ -112,6 +112,11 @@ public class Main {
 
 		System.out.println();
 
+		// faz reprodução e retorna arraylist para passar para população
+		ArrayList<Individuo> filhos = Pais.reproduz(pais, tamPop);
+
+		System.out.println();
+
 		int qtdMutacoes = 0;
 		if (tamPop < 100) {
 			qtdMutacoes = 1;
@@ -119,17 +124,14 @@ public class Main {
 			qtdMutacoes = (int) (tamPop * 0.02);
 		}
 
-		int totalDePaisEFilhos = tamPop - qtdMutacoes;
+		// faz mutações
+		filhos = populacao.mutacoes(filhos, qtdMutacoes);
 
-		// faz reprodução e retorna arraylist para passar para população
-		ArrayList<Individuo> novosIndividuos = Pais.reproduz(pais, totalDePaisEFilhos);
+		ArrayList<Individuo> novosIndividuos = new ArrayList<>(tamPop);
+		novosIndividuos.addAll(pais);
+		novosIndividuos.addAll(filhos);
 
 		populacao.setIndividuos(novosIndividuos);
-
-		System.out.println();
-
-		// insere as mutações para completar a população
-		populacao.insereMutacoes(qtdMutacoes);
 
 		System.out.println();
 
@@ -163,14 +165,18 @@ public class Main {
 
 		for (int contPop = 1; contPop <= numPopulacoes; contPop++) {
 			populacao.calculaFitness(itens, capMochila, 150);
-			// limpa arraylist pais antes de descobrir os novos pais
+			// limpa arraylist de pais antes de descobrir os novos pais
 			pais.clear();
 			pais = populacao.roleta();
-			// limpa arraylist de novos indivíduos antes de descobrir os novos indivíduos
+			// limpa arraylist de filhos antes de descobrir os novos filhos
+			filhos.clear();
+			filhos = Pais.reproduz(pais, tamPop);
+			// mutações
+			filhos = populacao.mutacoes(filhos, qtdMutacoes);
 			novosIndividuos.clear();
-			novosIndividuos = Pais.reproduz(pais, totalDePaisEFilhos);
+			novosIndividuos.addAll(pais);
+			novosIndividuos.addAll(filhos);
 			populacao.setIndividuos(novosIndividuos);
-			populacao.insereMutacoes(qtdMutacoes);
 		}
 
 		System.out.println();

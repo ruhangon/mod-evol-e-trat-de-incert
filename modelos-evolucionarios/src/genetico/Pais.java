@@ -4,43 +4,47 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Pais {
-	public static ArrayList<Individuo> reproduz(ArrayList<Individuo> paisSelecionados, int totalDePaisEFilhos) {
+	public static ArrayList<Individuo> reproduz(ArrayList<Individuo> paisSelecionados, int tamPop) {
 		System.out.println("Crossover");
-		ArrayList<Individuo> individuosComReproducao = new ArrayList<>();
-		for (Individuo individuosPais : paisSelecionados) {
-			individuosComReproducao.add(individuosPais);
-		}
+		int totalDeFilhos = tamPop - paisSelecionados.size();
+		ArrayList<Individuo> filhos = new ArrayList<>(totalDeFilhos);
 		Random random = new Random();
 		// define em qual posição do cromossomo será feita a divisão
 		int posDivisao = 0;
 		do {
-			posDivisao = random.nextInt(individuosComReproducao.get(0).getCromossomo().size());
-		} while ((posDivisao <= 0) || (posDivisao >= (individuosComReproducao.get(0).getCromossomo().size() - 1)));
+			posDivisao = random.nextInt(paisSelecionados.get(0).getCromossomo().size());
+		} while ((posDivisao <= 0) || (posDivisao >= (paisSelecionados.get(0).getCromossomo().size() - 1)));
 		/*
 		 * passa sequencialmente gerando os filhos e adicionando eles a arraylist de
 		 * indivíduos principal
 		 */
-		for (int contPais = 0; contPais < (paisSelecionados.size()-1); contPais += 2) {
+		for (int contPais = 0; contPais < (paisSelecionados.size() - 1); contPais += 2) {
 			Individuo filho1 = Pais.geraFilho(paisSelecionados.get(contPais), paisSelecionados.get(contPais + 1),
 					posDivisao);
-			individuosComReproducao.add(filho1);
+			filhos.add(filho1);
 			System.out.println(paisSelecionados.get(contPais) + " - " + paisSelecionados.get(contPais + 1));
 			System.out.println("Filho adicionado: " + filho1);
 			Individuo filho2 = Pais.geraFilho(paisSelecionados.get(contPais + 1), paisSelecionados.get(contPais),
 					posDivisao);
-			individuosComReproducao.add(filho2);
+			filhos.add(filho2);
 			System.out.println(paisSelecionados.get(contPais + 1) + " - " + paisSelecionados.get(contPais));
 			System.out.println("Filho adicionado: " + filho2);
 		}
-		// caso tenha faltado um indivíduo adiciona o abaixo
-		if (individuosComReproducao.size() < totalDePaisEFilhos) {
+		if (filhos.size() < totalDeFilhos) {
 			Individuo filho = Pais.geraFilho(paisSelecionados.get(0), paisSelecionados.get(paisSelecionados.size() - 1),
 					posDivisao);
-			individuosComReproducao.add(filho);
+			filhos.add(filho);
 			System.out.println(paisSelecionados.get(0) + " - " + paisSelecionados.get(paisSelecionados.size() - 1));
 			System.out.println("Filho adicionado: " + filho);
 		}
-		return individuosComReproducao;
+		if (filhos.size() < totalDeFilhos) {
+			Individuo filho = Pais.geraFilho(paisSelecionados.get(paisSelecionados.size() - 1), paisSelecionados.get(0),
+					posDivisao);
+			filhos.add(filho);
+			System.out.println(paisSelecionados.get(paisSelecionados.size() - 1) + " - " + paisSelecionados.get(0));
+			System.out.println("Filho adicionado: " + filho);
+		}
+		return filhos;
 	}
 
 	public static Individuo geraFilho(Individuo i1, Individuo i2, int posDivisao) {

@@ -2,7 +2,6 @@ package genetico;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 import item.Item;
 import util.LimitesDoIndividuo;
@@ -129,35 +128,29 @@ public class Populacao {
 		return valorMinimo;
 	}
 
-	public void insereMutacoes(int qtdMut) {
-		System.out.println("Mutação");
+	public ArrayList<Individuo> mutacoes(ArrayList<Individuo> filhos, int qtdMut) {
+		System.out.println("Mutações");
 		Random random = new Random();
 		// escolhe uma posição aleatória de cromossomo para alterar
-		int cromAleat = random.nextInt(this.individuos.get(0).getCromossomo().size());
+		int cromAleat = random.nextInt(filhos.get(0).getCromossomo().size());
 		// escolhe um indivíduo aleatoriamente
-		int indAleat = random.nextInt(this.individuos.size());
-		Individuo novoIndividuo = null;
+		int indAleat = random.nextInt(filhos.size());
 		int contMut = 0;
 		do {
-			novoIndividuo = new Individuo(this.individuos.get(indAleat));
-			// System.out.println(novoIndividuo);
-			if (novoIndividuo.getCromossomo().get(cromAleat) == 1) {
-				novoIndividuo.getCromossomo().set(cromAleat, 0);
+			System.out.println("Indivíduo antes da mutação: " + filhos.get(indAleat));
+			if (filhos.get(indAleat).getCromossomo().get(cromAleat) == 1) {
+				filhos.get(indAleat).getCromossomo().set(cromAleat, 0);
 			} else {
-				novoIndividuo.getCromossomo().set(cromAleat, 1);
+				filhos.get(indAleat).getCromossomo().set(cromAleat, 1);
 			}
-			// System.out.println(this.individuos.get(indAleat));
-			// System.out.println(novoIndividuo);
-			if (!Individuo.existeNaPopulacao(novoIndividuo, this.individuos)) {
-				this.individuos.add(novoIndividuo);
-				System.out.println("Indivíduo adicionado: " + novoIndividuo);
-				contMut++;
-				if (contMut >= qtdMut)
-					break;
-			}
-			cromAleat = random.nextInt(this.individuos.get(0).getCromossomo().size());
-			indAleat = random.nextInt(this.individuos.size());
+			System.out.println("Indivíduo depois da mutação: " + filhos.get(indAleat));
+			contMut++;
+			if (contMut >= qtdMut)
+				break;
+			cromAleat = random.nextInt(filhos.get(0).getCromossomo().size());
+			indAleat = random.nextInt(filhos.size());
 		} while (true);
+		return filhos;
 	}
 
 	public ArrayList<Individuo> getIndividuos() {
