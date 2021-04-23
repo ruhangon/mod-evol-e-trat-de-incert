@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import calcado.Calcado;
 import genetico.Individuo;
+import genetico.Populacao;
 
 public class Main {
 	public static void main(String[] args) {
@@ -21,9 +22,12 @@ public class Main {
 
 		Individuo individuo = new Individuo();
 		ArrayList<Individuo> individuos = individuo.criaIndividuos(100);
-		System.out.println("Lista de indivíduos: ");
-		for (Individuo i : individuos)
-			System.out.println(i);
+		// System.out.println("Lista de indivíduos: ");
+		// for (Individuo i : individuos)
+		// System.out.println(i);
+
+		Populacao populacao = new Populacao();
+		populacao.criaPopulacao(individuos, 40);
 
 		System.out.println("\n\nFim do programa");
 

@@ -33,6 +33,14 @@ public class Individuo {
 		return individuos;
 	}
 
+	public static boolean existeNaPopulacao(Individuo individuoAComparar, ArrayList<Individuo> todosOsIndividuos) {
+		for (Individuo atual : todosOsIndividuos) {
+			if (atual.cromossomo.equals(individuoAComparar.cromossomo))
+				return true;
+		}
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return "Individuo: " + cromossomo + "";
