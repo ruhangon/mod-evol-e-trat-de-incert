@@ -24,20 +24,20 @@ public class Individuo {
 			Individuo novoInd = new Individuo();
 			for (int totalCalcados = 0; totalCalcados < 400; totalCalcados++) {
 				Random random = new Random();
-				int numAleat = random.nextInt(9); // pega um número aleatório entre 0 e 8
+				int numAleat = random.nextInt(8); // pega um número aleatório entre 0 e 7
 				/*
-				 * 0, 1, 2 = sandálias. 3, 4 = sapatos masculinos. 5, 6 = botas femininas. 7, 8
-				 * = sapatos femininos. Dessa forma se consegue aumentar o número de sandálias
-				 * em muitos indivíduos, esse é um calçado de menor custo e menor tempo para
+				 * 0, 1, 2 = sandálias. 3 = sapatos masculinos. 4, 5 = botas femininas. 6, 7 =
+				 * sapatos femininos. Dessa forma se consegue aumentar o número de sandálias em
+				 * muitos indivíduos, esse é um calçado de menor custo e menor tempo para
 				 * produção
 				 */
 				if ((numAleat == 0) || (numAleat == 1) || (numAleat == 2)) {
 					novoInd.cromossomo.set(0, (novoInd.cromossomo.get(0) + 1));
-				} else if ((numAleat == 3) || (numAleat == 4)) {
+				} else if (numAleat == 3) {
 					novoInd.cromossomo.set(1, (novoInd.cromossomo.get(1) + 1));
-				} else if ((numAleat == 5) || (numAleat == 6)) {
+				} else if ((numAleat == 4) || (numAleat == 5)) {
 					novoInd.cromossomo.set(2, (novoInd.cromossomo.get(2) + 1));
-				} else if ((numAleat == 7) || (numAleat == 8)) {
+				} else if ((numAleat == 6) || (numAleat == 7)) {
 					novoInd.cromossomo.set(3, (novoInd.cromossomo.get(3) + 1));
 				}
 			}

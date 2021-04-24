@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import calcado.Calcado;
 import genetico.Individuo;
+import genetico.Pais;
 import genetico.Populacao;
 
 public class Main {
@@ -65,6 +66,24 @@ public class Main {
 
 		System.out.println();
 
+		int numPopulacoes = 0;
+		do {
+			try {
+				System.out.println("Quantas populações você terá até alcançar o resultado desejado?");
+				System.out.print("Resposta: ");
+				numPopulacoes = scan.nextInt();
+				scan.nextLine();
+				if (numPopulacoes < 1)
+					System.out.println("Opção inválida");
+			} catch (InputMismatchException e) {
+				System.out.println("Opção inválida");
+				numPopulacoes = 0;
+				scan.nextLine();
+			}
+		} while (numPopulacoes < 1);
+
+		System.out.println();
+
 		Populacao populacao = new Populacao();
 		populacao.criaPopulacao(individuos, tamPop);
 		// System.out.println("População: ");
@@ -80,6 +99,53 @@ public class Main {
 		populacao.calculaFitness(calcados, custoMaximo, tempoMaximo, penalidade);
 
 		System.out.println();
+
+		// roleta para encontrar os pais da nova população
+		ArrayList<Individuo> pais = populacao.roleta();
+
+		System.out.println();
+
+		// faz reprodução e retorna arraylist para passar para população
+		ArrayList<Individuo> filhos = Pais.reproduz(pais, tamPop);
+
+		System.out.println();
+
+		int qtdMutacoes = 0;
+		if (tamPop < 100) {
+			qtdMutacoes = 1;
+		} else {
+			qtdMutacoes = (int) (tamPop * 0.02);
+		}
+
+		// faz mutações
+		filhos = populacao.mutacoes(filhos, qtdMutacoes);
+
+		ArrayList<Individuo> novosIndividuos = new ArrayList<>(tamPop);
+		novosIndividuos.addAll(pais);
+		novosIndividuos.addAll(filhos);
+
+		populacao.setIndividuos(novosIndividuos);
+
+		System.out.println();
+
+		for (int contPop = 1; contPop <= numPopulacoes; contPop++) {
+			populacao.calculaFitness(calcados, custoMaximo, tempoMaximo, penalidade);
+			// limpa arraylist de pais antes de descobrir os novos pais
+			pais.clear();
+			pais = populacao.roleta();
+			// limpa arraylist de filhos antes de descobrir os novos filhos
+			filhos.clear();
+			filhos = Pais.reproduz(pais, tamPop);
+			// mutações
+			filhos = populacao.mutacoes(filhos, qtdMutacoes);
+			novosIndividuos.clear();
+			novosIndividuos.addAll(pais);
+			novosIndividuos.addAll(filhos);
+			populacao.setIndividuos(novosIndividuos);
+		}
+
+		System.out.println("Resultados finais: ");
+		System.out.println(populacao);
 
 		System.out.println("\n\nFim do programa");
 
